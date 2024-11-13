@@ -1,5 +1,5 @@
 {
-  "name": "humiris-npm-package",
+  "name": "humiris-ai",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -7,7 +7,11 @@
    "build": "tsc",
    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+    "keywords": [
+    "humiris",
+    "moai",
+    "mixture of ai"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",

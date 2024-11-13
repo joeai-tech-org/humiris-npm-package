@@ -1,21 +1,24 @@
 import axios from 'axios';
 
-interface Payload {
-  name: string;
-  phone: string;
-  models: Record<string, any>;
+interface useMixtuningPayload {
+  mixTuningId: string;
+  prompt: string;
+  systemInstruction: string;
+  mixInstruction: string;
+  temperature: number;
+  maxTokens: number;
 }
 
 class MoAi {
   private apiUrl: string;
   private apiKey: string;
 
-  constructor(apiUrl: string = 'http://localhost:2500/api/api-key-operators/use-mixtuning', apiKey: string) {
-    this.apiUrl = apiUrl;
+  constructor(apiKey: string) {
+    this.apiUrl = 'https://moai-platform-service-api-7e7d6b71bb3f.herokuapp.com/api/api-key-operators/use-mixtuning';
     this.apiKey = apiKey;
   }
 
-  public async useMixtuning(payload: Payload): Promise<any> {
+  public async useMixtuning(payload: useMixtuningPayload): Promise<any> {
     try {
       const response = await axios.post(
         this.apiUrl,

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 class MoAi {
-    constructor(apiUrl = 'http://localhost:2500/api/api-key-operators/use-mixtuning', apiKey) {
+    constructor(apiUrl = 'https://moai-platform-service-api-7e7d6b71bb3f.herokuapp.com/api/api-key-operators/use-mixtuning', apiKey) {
         this.apiUrl = apiUrl;
         this.apiKey = apiKey;
     }
