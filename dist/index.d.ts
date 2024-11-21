@@ -1,12 +1,15 @@
-interface Payload {
-    name: string;
-    phone: string;
-    models: Record<string, any>;
+interface useMixtuningPayload {
+    mixTuningId: string;
+    prompt: string;
+    systemInstruction: string;
+    mixInstruction: string;
+    temperature: number;
+    maxTokens: number;
 }
 declare class MoAi {
     private apiUrl;
     private apiKey;
-    constructor(apiUrl: string | undefined, apiKey: string);
-    useMixtuning(payload: Payload): Promise<any>;
+    constructor(apiKey: string);
+    useMixtuning(payload: useMixtuningPayload): Promise<any>;
 }
 export default MoAi;
