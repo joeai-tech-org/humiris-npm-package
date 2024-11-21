@@ -1,6 +1,6 @@
 interface useMixtuningPayload {
     mixTuningId: string;
-    prompt: string;
+    messages: string;
     systemInstruction: string;
     mixInstruction: string;
     temperature: number;
