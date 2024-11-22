@@ -1,8 +1,15 @@
 import axios from 'axios';
+import { IsArray, IsNotEmpty, IsString, ValidateNested, IsIn } from 'class-validator';
+import { Type } from 'class-transformer';
+
+interface MessageType {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
 
 interface useMixtuningPayload {
   mixTuningId: string;
-  messages: string;
+  messages: MessageType[];
   systemInstruction: string;
   mixInstruction: string;
   temperature: number;
