@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { IsArray, IsNotEmpty, IsString, ValidateNested, IsIn } from 'class-validator';
-import { Type } from 'class-transformer';
 
 interface MessageType {
   role: 'user' | 'assistant' | 'system';
@@ -10,8 +8,6 @@ interface MessageType {
 interface useMixtuningPayload {
   mixTuningId: string;
   messages: MessageType[];
-  systemInstruction: string;
-  mixInstruction: string;
   temperature: number;
   maxTokens: number;
 }
@@ -25,7 +21,7 @@ class MoAi {
     this.apiKey = apiKey;
   }
 
-  public async useMixtuning(payload: useMixtuningPayload): Promise<any> {
+  public async useBasicMixtuning(payload: useMixtuningPayload): Promise<any> {
     try {
       const response = await axios.post(
         this.apiUrl,
