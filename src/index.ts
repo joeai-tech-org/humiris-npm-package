@@ -17,7 +17,7 @@ class MoAi {
   private apiKey: string;
 
   constructor(apiKey: string) {
-    this.apiUrl = 'https://moai-platform-service-api-7e7d6b71bb3f.herokuapp.com/api/api-key-operators/use-mixtuning';
+    this.apiUrl = 'https://moai-service-app.humiris.ai/api/api-key-operators/use-mixtuning';
     this.apiKey = apiKey;
   }
 
