@@ -17,7 +17,8 @@ npm install humiris-ai
 # Using yarn
 yarn add humiris-ai
 
+```
+
 ## Documentation
 
 For more detailed information, please refer to the [Humiris Development Documentation](https://docs.humiris.ai/development).
-```
