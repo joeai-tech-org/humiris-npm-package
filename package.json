@@ -1,6 +1,6 @@
 {
   "name": "humiris-ai",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,9 +12,10 @@
     "moai",
     "mixture of ai"
   ],
-  "author": "",
+  "author": "Hilario Houmey",
+  "author_email":"h.hilario@humiris.ai",
   "license": "ISC",
-  "description": "",
+  "description": "Humiris AI is a library that allows developers to seamlessly integrate Mixture of AI Basic and Advanced into their applications.",
   "dependencies": {
     "axios": "^1.7.7",
     "class-transformer": "^0.5.1",
