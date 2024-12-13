@@ -1,20 +1,24 @@
 import axios from 'axios';
 
+
+type Role = 'user' | 'assistant' | 'system';
+
 interface MessageType {
-  role: 'user' | 'assistant' | 'system';
+  role: Role;
   content: string;
 }
 
+
 interface basicPayload {
   mixTuningId: string;
-  messages: MessageType[];
+  messages: (Pick<MessageType, 'content'> & { role: Role })[];
   temperature: number;
   maxTokens: number;
 }
 
 interface advancedPayload {
   advancedMixTuningId: string;
-  messages: MessageType[];
+  messages: (Pick<MessageType, 'content'> & { role: Role })[];
   temperature: number;
   maxTokens: number;
 }
