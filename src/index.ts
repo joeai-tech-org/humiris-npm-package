@@ -1,7 +1,30 @@
-import axios from 'axios';
-
-
 type Role = 'user' | 'assistant' | 'system';
+
+type BasicChatOutput = {
+    content: string;
+    metadata?: {
+        usage: {
+            input_tokens: number;
+            output_tokens: number;
+            total_tokens: number;
+        };
+        llm: {
+            name: string;
+            version: string;
+        };
+    };
+};
+
+type AdvancedChatOutput = {
+    content: string;
+    metadata?: {
+        usage: {
+            input_tokens: number;
+            output_tokens: number;
+            total_tokens: number;
+        };
+    };
+}
 
 interface MessageType {
   role: Role;
@@ -11,14 +34,14 @@ interface MessageType {
 
 interface basicPayload {
   mixTuningId: string;
-  messages: (Pick<MessageType, 'content'> & { role: Role })[];
+  messages: MessageType[];
   temperature: number;
   maxTokens: number;
 }
 
 interface advancedPayload {
   advancedMixTuningId: string;
-  messages: (Pick<MessageType, 'content'> & { role: Role })[];
+  messages: MessageType[];
   temperature: number;
   maxTokens: number;
 }
@@ -32,15 +55,32 @@ class BasicMoAi {
     this.apiKey = apiKey;
   }
 
-  public async useBasicMixtuning(payload: basicPayload): Promise<any> {
+  public async useBasicMixtuning(payload: basicPayload): Promise<BasicChatOutput> {
     try {
-      const response = await axios.post(this.apiUrl, payload, {
-        headers: {
-          'moai-api-key': this.apiKey,
-          'Content-Type': 'application/json'
-        }
-      });
-      return response;
+       const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: {
+        'moai-api-key': this.apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    const responseData = await response.json();
+    const output: BasicChatOutput = {
+      content: responseData.content,
+      metadata: {
+        usage: {
+          input_tokens: responseData.metadata.usage.input_tokens,
+          output_tokens: responseData.metadata.usage.output_tokens,
+          total_tokens: responseData.metadata.usage.total_tokens,
+        },
+        llm: {
+          name: responseData.metadata.llm.name,
+          version: responseData.metadata.llm.version,
+        },
+      }
+    };
+    return output;
     } catch (error) {
       throw new Error(`Failed to send request: ${error}`);
     }
@@ -56,15 +96,18 @@ class AdvancedMoAi {
     this.apiKey = apiKey;
   }
 
-  public async useAdvancedMixtuning(payload: advancedPayload): Promise<any> {
+  public async useAdvancedMixtuning(payload: advancedPayload): Promise<AdvancedChatOutput> {
     try {
-      const response = await axios.post(this.apiUrl, payload, {
-        headers: {
-          'moai-api-key': this.apiKey,
-          'Content-Type': 'application/json'
-        }
-      });
-      return response;
+       const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: {
+        'moai-api-key': this.apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    const output: AdvancedChatOutput = await response.json();
+    return output;
     } catch (error) {
       throw new Error(`Failed to send request: ${error}`);
     }
