@@ -66,21 +66,7 @@ class BasicMoAi {
       body: JSON.stringify(payload)
     });
     const responseData = await response.json();
-    const output: BasicChatOutput = {
-      content: responseData.content,
-      metadata: {
-        usage: {
-          input_tokens: responseData.metadata.usage.input_tokens,
-          output_tokens: responseData.metadata.usage.output_tokens,
-          total_tokens: responseData.metadata.usage.total_tokens,
-        },
-        llm: {
-          name: responseData.metadata.llm.name,
-          version: responseData.metadata.llm.version,
-        },
-      }
-    };
-    return output;
+    return  responseData;
     } catch (error) {
       throw new Error(`Failed to send request: ${error}`);
     }
@@ -106,8 +92,8 @@ class AdvancedMoAi {
       },
       body: JSON.stringify(payload)
     });
-    const output: AdvancedChatOutput = await response.json();
-    return output;
+    const responseData = await response.json();
+    return responseData;
     } catch (error) {
       throw new Error(`Failed to send request: ${error}`);
     }
