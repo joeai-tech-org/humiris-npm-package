@@ -100,4 +100,4 @@ class AdvancedMoAi {
   }
 }
 
-export { BasicMoAi, AdvancedMoAi };
+export { BasicMoAi, AdvancedMoAi, BasicChatOutput,  AdvancedChatOutput};
