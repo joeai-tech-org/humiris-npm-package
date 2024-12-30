@@ -52,10 +52,8 @@ class BasicMoAi {
 	private apiKey: string;
 
 	constructor(apiKey: string) {
-		// this.apiUrl =
-		// 	'https://moai-service-app.humiris.ai/api/api-key-operators/use-basic-mixtuning';
 		this.apiUrl =
-			'http://localhost:2600/api/api-key-operators/use-basic-mixtuning';
+			'https://moai-service-app.humiris.ai/api/api-key-operators/use-basic-mixtuning';
 		this.apiKey = apiKey;
 	}
 
