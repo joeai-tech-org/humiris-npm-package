@@ -37,6 +37,7 @@ interface basicPayload {
   messages: MessageType[];
   temperature: number;
   maxTokens: number;
+  stream: boolean;
 }
 
 interface advancedPayload {
