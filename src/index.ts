@@ -38,7 +38,6 @@ interface basicPayload {
 	messages: MessageType[];
 	temperature: number;
 	maxTokens: number;
-	stream?: boolean;
 }
 
 interface advancedPayload {
@@ -58,9 +57,7 @@ class BasicMoAi {
 		this.apiKey = apiKey;
 	}
 
-	public async useBasicMixtuning(
-		payload: basicPayload
-	): Promise<BasicChatOutput> {
+	public async useBasicMixtuning(payload: basicPayload) {
 		try {
 			const response = await fetch(this.apiUrl, {
 				method: 'POST',
@@ -70,16 +67,30 @@ class BasicMoAi {
 				},
 				body: JSON.stringify(payload),
 			});
-			let responseData;
 
-			if (payload.stream == true) {
-				if (!response.body) {
-					throw new Error('No response body');
-				}
-				responseData = toIterableReadableStream(response.body);
-			} else {
-				responseData = await response.json();
+			const responseData = await response.json();
+
+			return responseData;
+		} catch (error) {
+			throw new Error(`Failed to send request: ${error}`);
+		}
+	}
+
+	public async useBasicMixtuningStream(payload: basicPayload) {
+		try {
+			const response = await fetch(this.apiUrl, {
+				method: 'POST',
+				headers: {
+					'moai-api-key': this.apiKey,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ ...payload, stream: true }),
+			});
+
+			if (!response.body) {
+				throw new Error('No response body');
 			}
+			const responseData = toIterableReadableStream(response.body);
 
 			return responseData;
 		} catch (error) {
