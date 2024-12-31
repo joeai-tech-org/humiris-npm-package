@@ -1,4 +1,4 @@
-import { toIterableReadableStream } from './helpers';
+import { basicIterableReadableStream } from './helpers';
 
 type Role = 'user' | 'assistant' | 'system';
 
@@ -28,19 +28,19 @@ type AdvancedChatOutput = {
 	};
 };
 
-interface MessageType {
+export interface MessageType {
 	role: Role;
 	content: string;
 }
 
-interface basicPayload {
+export interface basicPayload {
 	mixTuningId: string;
 	messages: MessageType[];
 	temperature: number;
 	maxTokens: number;
 }
 
-interface advancedPayload {
+export interface advancedPayload {
 	advancedMixTuningId: string;
 	messages: MessageType[];
 	temperature: number;
@@ -90,7 +90,7 @@ class BasicMoAi {
 			if (!response.body) {
 				throw new Error('No response body');
 			}
-			const responseData = toIterableReadableStream(response.body);
+			const responseData = basicIterableReadableStream(response.body);
 
 			return responseData;
 		} catch (error) {
