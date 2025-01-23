@@ -1,6 +1,6 @@
-import { BasicChatOutput } from '.';
+import { AdvancedChatOutput, BasicChatOutput } from '.';
 
-async function* basicStreamToAsyncIterable(
+async function* streamToAsyncIterable<T>(
 	stream: ReadableStream<ArrayBufferLike>
 ) {
 	const reader = stream.getReader();
@@ -19,7 +19,7 @@ async function* basicStreamToAsyncIterable(
 				// Check if the current buffer forms a valid JSON object
 				if (buffer.trim().startsWith('{') && buffer.trim().endsWith('}')) {
 					try {
-						const parsed: BasicChatOutput = JSON.parse(buffer);
+						const parsed: T = JSON.parse(buffer);
 
 						buffer = ''; // Reset buffer after successful parse
 						yield parsed;
@@ -37,5 +37,11 @@ async function* basicStreamToAsyncIterable(
 export function basicIterableReadableStream(
 	stream: ReadableStream<Uint8Array>
 ) {
-	return basicStreamToAsyncIterable(stream);
+	return streamToAsyncIterable<BasicChatOutput>(stream);
+}
+
+export function advancedIterableReadableStream(
+	stream: ReadableStream<Uint8Array>
+) {
+	return streamToAsyncIterable<AdvancedChatOutput>(stream);
 }
