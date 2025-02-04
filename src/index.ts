@@ -1,5 +1,6 @@
 import {
 	advancedIterableReadableStream,
+	advancedIterableReadableStreamTask,
 	basicIterableReadableStream,
 } from './helpers';
 
@@ -30,6 +31,12 @@ type AdvancedChatOutput = {
 		};
 	};
 };
+
+export type AdvancedChatTypeOutput = 'title' | 'task' | 'output';
+
+type AdvancedChatTaskOutput = {
+	type: AdvancedChatTypeOutput;
+} & AdvancedChatOutput;
 
 export interface MessageType {
 	role: Role;
@@ -152,6 +159,34 @@ class AdvancedMoAi {
 			throw new Error(`Failed to send request: ${error}`);
 		}
 	}
+
+	public async useAdvancedMixtuningStreamTask(payload: advancedPayload) {
+		try {
+			const response = await fetch(`${this.apiUrl}/task`, {
+				method: 'POST',
+				headers: {
+					'moai-api-key': this.apiKey,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ ...payload, stream: true }),
+			});
+
+			if (!response.body) {
+				throw new Error('No response body');
+			}
+			const responseData = advancedIterableReadableStreamTask(response.body);
+
+			return responseData;
+		} catch (error) {
+			throw new Error(`Failed to send request: ${error}`);
+		}
+	}
 }
 
-export { BasicMoAi, AdvancedMoAi, BasicChatOutput, AdvancedChatOutput };
+export {
+	BasicMoAi,
+	AdvancedMoAi,
+	BasicChatOutput,
+	AdvancedChatOutput,
+	AdvancedChatTaskOutput,
+};

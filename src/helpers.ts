@@ -1,4 +1,4 @@
-import { AdvancedChatOutput, BasicChatOutput } from '.';
+import { AdvancedChatOutput, AdvancedChatTaskOutput, BasicChatOutput } from '.';
 
 async function* streamToAsyncIterable<T>(
 	stream: ReadableStream<ArrayBufferLike>
@@ -44,4 +44,10 @@ export function advancedIterableReadableStream(
 	stream: ReadableStream<Uint8Array>
 ) {
 	return streamToAsyncIterable<AdvancedChatOutput>(stream);
+}
+
+export function advancedIterableReadableStreamTask(
+	stream: ReadableStream<Uint8Array>
+) {
+	return streamToAsyncIterable<AdvancedChatTaskOutput>(stream);
 }
